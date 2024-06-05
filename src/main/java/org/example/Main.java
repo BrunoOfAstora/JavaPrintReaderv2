@@ -2,15 +2,10 @@ package org.example;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import com.aspose.ocr.AsposeOCR;
-import com.aspose.ocr.ImageStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class Main {
-
     public static void main(String[] args) {
 
         try {
@@ -26,7 +21,7 @@ public class Main {
 
             // Obtém o caminho para a área de trabalho do usuário
             String userHome = System.getProperty("user.home");
-            File desktopDir = new File(userHome, "Desktop");
+            File desktopDir = new File(userHome, "Documentos");
 
             // Verifica se a pasta "JavaIMG" existe na área de trabalho, se não, cria a pasta
             File javaimgDir = new File(desktopDir, "JavaIMG");
@@ -41,33 +36,12 @@ public class Main {
             ImageIO.write(bufferedimage, "jpg", outputFile);
 
             System.out.println("Captura de tela salva em: " + outputFile.getAbsolutePath());
+
+            ImageToText.ProcessImage(outputFile.getAbsolutePath(), javaimgDir.getAbsolutePath()+ "/doc.txt");
+
         } catch (AWTException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public class OCRExample {
-        public static void main(String[] args) {
-
-
-            // Inicializar o objeto AsposeOCR
-            AsposeOCR ocrEngine = new AsposeOCR();
-
-            // Caminho para a imagem que você deseja processar
-            String imagePath = "path/to/your/image.png";
-
-            try (InputStream imageStream = new FileInputStream(imagePath)) {
-                // Carregar a imagem
-                ImageStream stream = new ImageStream(imageStream);
-
-                // Executar OCR na imagem
-                String result = ocrEngine.RecognizeImage(stream);
-
-                // Imprimir o texto reconhecido
-                System.out.println("Texto reconhecido: " + result);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    }
+}
